@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Time Coronavirus Tracker</title>
+
+     <!-- Bootstrap CSS -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+     <!-- Font Awesome CDN -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+     <style>
+        @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+         *
+         {
+            font-family: 'PT Sans', sans-serif;
+             font-weight: 400;
+         }
+         .card
+         {
+             margin-top: 30px;
+             border: 0px !important;
+             
+         }
+         hr
+         {
+             width:250px;
+             margin: 10px auto;
+         }
+     
+     </style>
+</head>
+<body>
+
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col-12 col-md-8 mx-auto mt-2">
+                    <div class="card shadow-lg">
+                        <div class="card-body">
+                            <h2 class="text-center fw-bold"><i class="fas fa-2x fa-head-side-mask"></i> <hr>
+                                Real Time Covid-19 Tracker</h2>
+                            <h1 id="country" class="text-center display-3"></h1>
+                            <hr>
+                            <h3 id="date" class="fw-light text-center"></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mx-auto mt-3">
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow-lg">
+                                <div class="card-body">
+                                    <h2 class="text-center fw-light">New Confirmed</h2>
+                                    <hr>
+                                    <h5 class="display-6 text-center" id="confirmed"></h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow-lg">
+                                <div class="card-body">
+                                    <h2 class="text-center fw-light">New Deaths</h2>
+                                    <hr>
+                                    <h5 class="display-6 text-center" id="new_deaths"></h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow-lg">
+                                <div class="card-body">
+                                    <h2 class="text-center fw-light">New Recovered</h2>
+                                    <hr>
+                                    <h5 class="display-6 text-center" id="new_recovered"></h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow-lg">
+                                <div class="card-body">
+                                    <h2 class="text-center fw-light">Total Confirmed</h2>
+                                    <hr>
+                                    <h5 class="display-6 text-center" id="total_confirmed"></h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow-lg">
+                                <div class="card-body">
+                                    <h2 class="text-center fw-light">Total Deaths</h2>
+                                    <hr>
+                                    <h5 class="display-6 text-center" id="total_deaths"></h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow-lg">
+                                <div class="card-body">
+                                    <h2 class="text-center fw-light">Total Recovered</h2>
+                                    <hr>
+                                    <h5 class="display-6 text-center" id="total_recovered"></h5>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid bg-light py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p>Designed & Developed <br>
+                    by Imuzi Ihcinihs <i class="text-danger fas fa-heart"></i>
+                    <br>
+                    <hr>
+                     Onarum <i class="fas fa-heart text-danger"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    <script>
+         var date = new Date();
+            d = date.getDate();
+
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+            m = months[date.getMonth()];
+            y = date.getFullYear();
+            document.getElementById("date").innerHTML = d + "-" + m + "-" + y;
+
+          async function getData(){
+            const data = await fetch("https://api.covid19api.com/summary");
+        
+            const jsondata = await data.json();
+           
+            console.log(jsondata.Countries[76]);
+            const a = jsondata.Countries[76].NewConfirmed;
+
+            document.getElementById("country").innerHTML = jsondata.Countries[76].Country;
+            document.getElementById("confirmed").innerHTML = jsondata.Countries[76].NewConfirmed;
+            document.getElementById("new_deaths").innerHTML = jsondata.Countries[76].NewDeaths;
+            document.getElementById("new_recovered").innerHTML = jsondata.Countries[76].NewRecovered;
+            document.getElementById("total_confirmed").innerHTML = jsondata.Countries[76].TotalConfirmed;
+            document.getElementById("total_deaths").innerHTML = jsondata.Countries[76].TotalDeaths;
+            document.getElementById("total_recovered").innerHTML = jsondata.Countries[76].TotalRecovered;
+        }
+        getData();
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,1 +1,2 @@
-# CoronaVirusTracker
+# covidtracker.github.io
+This is simple JavaScript Project which shows real time corona virus data...
